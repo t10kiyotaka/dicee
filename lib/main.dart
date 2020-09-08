@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,8 +24,8 @@ class DicePage extends StatefulWidget {
 class _DicePageState extends State<DicePage> {
   @override
   Widget build(BuildContext context) {
-    final diceNumberArr = [1, 2, 3, 4, 5, 6];
-    int leftDiceNumber = (diceNumberArr..shuffle()).first;
+    int leftDiceNumber = randomise();
+    int rightDiceNumber = randomise();
 
     return Center(
       child: Row(
@@ -35,8 +34,7 @@ class _DicePageState extends State<DicePage> {
             child: FlatButton(
               onPressed: () {
                 setState(() {
-                  leftDiceNumber = (diceNumberArr..shuffle()).first;
-                  print('left button was pressed. leftDiceNumber: $leftDiceNumber');
+                  leftDiceNumber = randomise();
                 });
               },
               child: Image.asset('images/dice$leftDiceNumber.png'),
@@ -45,13 +43,20 @@ class _DicePageState extends State<DicePage> {
           Expanded(
             child: FlatButton(
               onPressed: () {
-                print('right!');
+                setState(() {
+                  rightDiceNumber = randomise();
+                });
               },
-              child: Image.asset('images/dice1.png'),
+              child: Image.asset('images/dice$rightDiceNumber.png'),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+// Return random number between 1 to 6.
+int randomise() {
+  return Random().nextInt(6) + 1;
 }
